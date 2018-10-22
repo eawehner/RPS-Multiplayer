@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<head>
+    <title>Rock Paper Scissors...Online!</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/5.5.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.5/firebase-database.js"></script>
+
+    <!-- <script src="https://www.gstatic.com/firebasejs/5.5.5/firebase.js"></script> -->
+
+    <script src="assets/javascript/script.js"></script>
+
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+    <div id="gameMessages"></div>
+
+    <div id="player1">
+        <div id="player1login">
+            <input type="text" id="username1" name="username1" onfocus="this.value=''" value="Player 1, your name?"><br>
+            <input type="submit" id="submit1" value="Submit">
+        </div>
+        <div id="player1choices">
+            <input type="submit" class="choice1" value="Rock!">
+            <input type="submit" class="choice1" value="Paper!">
+            <input type="submit" class="choice1" value="Scissors!">
+        </div>
+        <div id="player1result"></div>
+        <div id="player1score"></div>
+    </div>
+
+    <div id="player2">
+        <div id="player2login">
+            <input type="text" id="username2" name="username2" onfocus="this.value=''" value="Player 2, your name?"><br>
+            <input type="submit" id="submit2" value="Submit">
+        </div>
+        <div id="player2choices">
+            <input type="submit" class="choice2" value="Rock!">
+            <input type="submit" class="choice2" value="Paper!">
+            <input type="submit" class="choice2" value="Scissors!">
+        </div>
+        <div id="player2result"></div>
+        <div id="player2score"></div>
+    </div>
+
+    <div id="chatwindow">
+        <table id="chat">
+
+        </table>
+    </div>
+
+</body>
+</html>
