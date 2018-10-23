@@ -15,9 +15,10 @@
 </head>
 <body>
 
-    <div id="gameMessages"></div>
+    <h1 id="gameMessages"></h1>
 
     <div id="player1">
+        <h3 id="name1"></h1>
         <div id="player1login">
             <input type="text" id="username1" name="username1" onfocus="this.value=''" value="Player 1, your name?"><br>
             <input type="submit" id="submit1" value="Submit">
@@ -27,11 +28,16 @@
             <input type="submit" class="choice1" value="Paper!">
             <input type="submit" class="choice1" value="Scissors!">
         </div>
-        <div id="player1result"></div>
-        <div id="player1score"></div>
+        <div id="player1score">
+            <h3 id="wins1"></h3>
+        </div>
+        <div id="player1leave">
+            <input type="submit" id="leave1" value="Leave the Game">
+        </div>
     </div>
 
     <div id="player2">
+        <h3 id="name2"></h1>
         <div id="player2login">
             <input type="text" id="username2" name="username2" onfocus="this.value=''" value="Player 2, your name?"><br>
             <input type="submit" id="submit2" value="Submit">
@@ -41,14 +47,20 @@
             <input type="submit" class="choice2" value="Paper!">
             <input type="submit" class="choice2" value="Scissors!">
         </div>
-        <div id="player2result"></div>
-        <div id="player2score"></div>
+        <div id="player2score">
+            <h3 id="wins2"></h3>
+        </div>
+        <div id="player2leave">
+            <input type="submit" id="leave2" value="Leave the Game">
+        </div>
     </div>
 
-    <div id="chatwindow">
-        <table id="chat">
+    <div id="ties"></div>
 
-        </table>
+    <div id="chatwindow">
+        <!-- Displayed messages would go here, in a div set to 500x400px and with overflow turned off; try to emulate a scrollable frame -->
+        <!-- Input for messages would go here -->
+        <!-- And the submit button! -->
     </div>
 
 </body>
