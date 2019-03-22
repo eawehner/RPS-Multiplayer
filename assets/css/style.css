@@ -10,6 +10,24 @@
     margin: 5px;
 }
 
+#playerActions {
+    height: 45%;
+    margin-bottom: 10px;
+}
+
+#chatWindow {
+    position: absolute;
+    bottom: 10px;
+    left: 25%;
+}
+
+#chatBox {
+    width: 500px;
+    height: 300px;
+    margin: auto;
+    border: solid 1px #000000;
+}
+
 /* #player1login {
     display: show;
 }

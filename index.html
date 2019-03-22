@@ -17,6 +17,8 @@
 
     <h1 id="gameMessages"></h1>
 
+    <div id="playerActions">
+
     <div id="player1">
         <h3 id="name1"></h1>
         <div id="player1login">
@@ -55,12 +57,19 @@
         </div>
     </div>
 
+    </div>
+
     <div id="ties"></div>
 
-    <div id="chatwindow">
+    <div id="chatWindow">
         <!-- Displayed messages would go here, in a div set to 500x400px and with overflow turned off; try to emulate a scrollable frame -->
+        <div id="chatBox"></div>
         <!-- Input for messages would go here -->
+        <br>
+        <input type="text" id="chatMessage" name="chatMessage">
         <!-- And the submit button! -->
+        <br>
+        <input type="submit" id="chatSubmit" value="send">
     </div>
 
 </body>

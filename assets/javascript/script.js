@@ -29,6 +29,9 @@ var player2InGame = false;
 var player1Chose = false;
 var player2Chose = false;
 
+//variable for chat messages
+var message = "";
+
 //HIDING DIVS NOT IN USE
 $("#player1choices").hide();
 $("#player2choices").hide();
@@ -226,6 +229,23 @@ $("#leave2").on("click", function(event) {
     $("#player2choices").hide();
 });
 
+
+//THIS IS WHERE THE CHATBOX CODE WILL GO, SET TO DIVS PUT IN THE #chat DIV IN THE HTML FILE
+
+$("#chatSubmit").on("click", function(event) {
+    event.preventDefault();
+
+    //set up variable for messages
+    message = $("#chatMessage").val().trim();
+
+    database.ref().push({
+        message: message
+    });
+
+    $("#chatMessage").val("");
+});
+
+
 //WATCH FIREBASE FOR CHANGES
 database.ref().on("value", function(snapshot) {
     event.preventDefault();
@@ -268,7 +288,6 @@ database.ref().on("value", function(snapshot) {
     console.log("Error: " + errorObject.code);
 });
 
-//THIS IS WHERE THE CHATBOX CODE WILL GO, SET TO DIVS PUT IN THE #chat DIV IN THE HTML FILE
 
 //PULL PAST MESSAGES FROM FIREBASE, USING THE ADDCHILD METHOD AND A FOR LOOP TO GO THROUGH EACH CHAT MESSAGE AND APPENDING THEM TO THE (#chatMessages) DIVS
 //USE database.ref().on("value", function(){ // MORE CODE }) HERE TO TRACK WHEN MESSAGES ARE UPDATED
