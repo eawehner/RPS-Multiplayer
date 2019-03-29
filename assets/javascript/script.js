@@ -29,6 +29,9 @@ var player2InGame = false;
 var player1Chose = false;
 var player2Chose = false;
 
+//establish game message variable
+var gameMessage;
+
 //variable for chat messages
 var message = "";
 
@@ -44,35 +47,50 @@ $(document).ready(function(){
 
 function checkForChoices() {
     // check to see if players have made their choice
-database.ref().once("value", function(snapshot) {
+database.ref().on("value", function(snapshot) {
     player1Chose = snapshot.val().player1Chose;
     player2Chose = snapshot.val().player2Chose;
     
     //compare player1's choice to player2's choice
     if (player1Chose === false && player2Chose === false) {
-            $("#gameMessages").text("Players, make your choices!");
+            $("#gameMessages").text(snapshot.val().gameMessage);
     } else if (player1Chose === true && player2Chose === false) {
-            $("#gameMessages").text("Waiting on Player 2...");
+            gameMessage = "Waiting on Player 2...";
+
+            database.ref().update({
+                gameMessage: gameMessage
+            });
+
+            $("#gameMessages").text(gameMessage);
     } else if (player1Chose === false && player2Chose === true) {
-            $("#gameMessages").text("Waiting on Player 1...")
+            gameMessage = "Waiting on Player 1...";
+
+            database.ref().update({
+                gameMessage: gameMessage
+            });
+
+            $("#gameMessages").text(gameMessage);
     } else {
         //compare player1's choice to player2's choice
-        $("#gameMessage").text("Player 1 chose " + snapshot.val().choice1 + "! Player 2 chose " + snapshot.val().choice2 + "!");
+        
     
         if (snapshot.val().choice1 === snapshot.val().choice2) {
             //if both players selected the same thing!
             ties = snapshot.val().ties;
     
             ties++;
+
+            gameMessage = "It's a tie!";
     
             database.ref().update({
                 ties: ties,
                 player1Chose: false,
-                player2Chose: false
+                player2Chose: false,
+                gameMessage: gameMessage
             });
 
             $("#ties").text("Ties: " + ties);
-            $("gameMessages").text("It's a tie!");
+            $("gameMessages").text(gameMessage);
 
             return;
     
@@ -81,15 +99,18 @@ database.ref().once("value", function(snapshot) {
             wins1 = snapshot.val().wins1;
     
             wins1++;
+
+            gameMessage = "Player 1 chose: " + snapshot.val().choice1 + " Player 2 chose: " + snapshot.val().choice2 + " Player 1 wins!";
     
             database.ref().update({
                 wins1: wins1,
                 player1Chose: false,
-                player2Chose: false
+                player2Chose: false,
+                gameMessage: gameMessage
             });
 
             $("#wins1").text("Wins: " + wins1);
-            $("#gameMessages").text("Player 1 chose: " + snapshot.val().choice1 + " Player 2 chose: " + snapshot.val().choice2 + " Player 1 wins!");
+            $("#gameMessages").text(gameMessage);
 
             return;
     
@@ -98,15 +119,18 @@ database.ref().once("value", function(snapshot) {
             wins2 = snapshot.val().wins2;
     
             wins2++;
+
+            gameMessage = "Player 1 chose: " + snapshot.val().choice1 + " Player 2 chose: " + snapshot.val().choice2 + " Player 2 wins!";
     
             database.ref().update({
                 wins2: wins2,
                 player1Chose: false,
-                player2Chose: false
+                player2Chose: false,
+                gameMessage: gameMessage
             });
 
             $("#wins2").text("Wins: " + wins2);
-            $("#gameMessages").text("Player 1 chose: " + snapshot.val().choice1 + " Player 2 chose: " + snapshot.val().choice2 + " Player 2 wins!");
+            $("#gameMessages").text(gameMessage);
 
             return;
         }
@@ -163,7 +187,7 @@ $(".choice1").on("click", function(event) {
 
     $("#gameMessages").text("You chose " + choice1);
 
-    // $("#player1choices").show();
+    $("#player1choices").show();
 
     checkForChoices();
 });
@@ -181,7 +205,7 @@ $(".choice2").on("click", function(event) {
 
     $("#gameMessages").text("You chose " + choice2);
 
-    // $("#player2choices").show();
+    $("#player2choices").show();
 
     checkForChoices();
 });
@@ -265,13 +289,25 @@ database.ref().on("value", function(snapshot) {
         $("#wins2").text("Wins: " + snapshot.val().wins2);
         $("#ties").text("Ties: " + snapshot.val().ties);
     } else if (player1InGame === true && player2InGame === false) {
-        $("#gameMessages").text("Waiting for a Player 2.");
+        gameMessage = "Waiting for a Player 2.";
+
+        database.ref().update({
+            gameMessage: gameMessage
+        });
+
+        $("#gameMessages").text(gameMessage);
         $("#player1login").hide();
         $("#player2login").show();
         $("#name1").text(snapshot.val().name1);
         $("#name2").text(" ");
     } else if (player1InGame === false && player2InGame === true) {
-        $("#gameMessages").text("Waiting for a Player 1.");
+        gameMessage = "Waiting for a Player 1.";
+
+        database.ref().update({
+            gameMessage: gameMessage
+        });
+
+        $("#gameMessages").text(gameMessage);
         $("#player1login").show();
         $("#player2login").hide();
         $("#name1").text(" ");
