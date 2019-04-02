@@ -29,11 +29,11 @@ var player2InGame = false;
 var player1Chose = false;
 var player2Chose = false;
 
+//establish variable to set the player for the session
+var player;
+
 //establish game message variable
 var gameMessage;
-
-//variable for chat messages
-var message = "";
 
 //HIDING DIVS NOT IN USE
 $("#player1choices").hide();
@@ -142,6 +142,8 @@ database.ref().on("value", function(snapshot) {
 $("#submit1").on("click", function(event) {
     event.preventDefault();
 
+    player = 1;
+
     name1 = $("#username1").val().trim();
 
     database.ref().update({
@@ -159,6 +161,8 @@ $("#submit1").on("click", function(event) {
 //LOGIN AND START FOR PLAYER2
 $("#submit2").on("click", function(event) {
     event.preventDefault();
+
+    player = 2;
 
     name2 = $("#username2").val().trim();
 
@@ -254,22 +258,6 @@ $("#leave2").on("click", function(event) {
 });
 
 
-//THIS IS WHERE THE CHATBOX CODE WILL GO, SET TO DIVS PUT IN THE #chat DIV IN THE HTML FILE
-
-$("#chatSubmit").on("click", function(event) {
-    event.preventDefault();
-
-    //set up variable for messages
-    message = $("#chatMessage").val().trim();
-
-    database.ref().push({
-        message: message
-    });
-
-    $("#chatMessage").val("");
-});
-
-
 //WATCH FIREBASE FOR CHANGES
 database.ref().on("value", function(snapshot) {
     event.preventDefault();
@@ -288,6 +276,8 @@ database.ref().on("value", function(snapshot) {
         $("#wins1").text("Wins: " + snapshot.val().wins1);
         $("#wins2").text("Wins: " + snapshot.val().wins2);
         $("#ties").text("Ties: " + snapshot.val().ties);
+        $("#player1choices").hide();
+        $("#player2choices").hide();
     } else if (player1InGame === true && player2InGame === false) {
         gameMessage = "Waiting for a Player 2.";
 
@@ -313,24 +303,71 @@ database.ref().on("value", function(snapshot) {
         $("#name1").text(" ");
         $("#name2").text(snapshot.val().name2);
     } else {
+        gameMessage = "Brand new game! Bring a friend!";
+
+        database.ref().update({
+            gameMessage: gameMessage
+        });
+
         $("#player1login").show();
         $("#player2login").show();
         $("#name1").text(" ");
         $("#name2").text(" ");
-        $("#gameMessages").text("Brand new game! Bring a friend!");
+        $("#gameMessages").text(gameMessage);
     }
+
+
+    // if (player === 1) {
+    //     database.ref("player1InGame").onDisconnect.update({
+    //         player1InGame: false,
+    //         name1: ""
+    //     });
+    // } else if (player === 2) {
+    //     database.ref("player2InGame").onDisconnect.update({
+    //         player2InGame: false,
+    //         name2: ""
+    //     });
+    // }
 
 }, function(errorObject) {
     console.log("Error: " + errorObject.code);
 });
 
 
+
 //PULL PAST MESSAGES FROM FIREBASE, USING THE ADDCHILD METHOD AND A FOR LOOP TO GO THROUGH EACH CHAT MESSAGE AND APPENDING THEM TO THE (#chatMessages) DIVS
 //USE database.ref().on("value", function(){ // MORE CODE }) HERE TO TRACK WHEN MESSAGES ARE UPDATED
+
+database.ref().child("messages").on("value", function(snapshot) {
+    $("#chatBox").empty();
+
+    $.each(snapshot.val(), function(i, value) {
+
+        var message = value.message;
+
+        var chatMessage = $("<p class='messages'>").text(message);
+
+        $("#chatBox").append(chatMessage);
+
+    });
+});
 
 //CREATE A CLICK EVENT FOR WHEN THE SUBMIT BUTTON FOR THE CHAT IS CLICKED (#submitChat)
 //PULL VALUE FROM THE (#chatInput) TEXT FIELD IN THE HTML, USE .val().trim()
 //PUSH THE (#chatInput) TO FIREBASE USING '.SET'
 //SINCE WE HAVE A DATABASE REF ABOVE CHECKING FOR CHANGES TO THE VALUES, THE CHAT SHOULD BE UPDATED WITHOUT ADJUSTING THE TEXT OR HTML HERE
+
+$("#chatSubmit").on("click", function(event) {
+    event.preventDefault();
+
+    //set up variable for messages
+    message = $("#chatMessage").val().trim();
+
+    database.ref().child("messages").push({
+        message: message
+    });
+
+    $("#chatMessage").val("");
+});
 
 });
