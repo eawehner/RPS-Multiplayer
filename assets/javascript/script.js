@@ -156,6 +156,7 @@ $("#submit1").on("click", function(event) {
     $("#player1login").hide();
     $("#name1").text(name1);
     $("#player1choices").show();
+    $("#player2choices").hide();
 });
 
 //LOGIN AND START FOR PLAYER2
@@ -176,6 +177,7 @@ $("#submit2").on("click", function(event) {
     $("#player2login").hide();
     $("#name2").text(name2);
     $("#player2choices").show();
+    $("#player1choices").hide();
 });
 
 //PLAYER ONE CHOOSES, SAVES CHOICE TO FIREBASE
@@ -276,8 +278,6 @@ database.ref().on("value", function(snapshot) {
         $("#wins1").text("Wins: " + snapshot.val().wins1);
         $("#wins2").text("Wins: " + snapshot.val().wins2);
         $("#ties").text("Ties: " + snapshot.val().ties);
-        $("#player1choices").hide();
-        $("#player2choices").hide();
     } else if (player1InGame === true && player2InGame === false) {
         gameMessage = "Waiting for a Player 2.";
 
@@ -347,7 +347,8 @@ database.ref().child("messages").on("value", function(snapshot) {
 
         var chatMessage = $("<p class='messages'>").text(message);
 
-        $("#chatBox").append(chatMessage);
+        //we're prepending instead of appending because we're using a CSS Flexbox trick to auto-scroll the chatbox to the bottom, which displays the messages in reverse. By prepending, the messages display chronologically!
+        $("#chatBox").prepend(chatMessage);
 
     });
 });

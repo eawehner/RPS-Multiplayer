@@ -1,53 +1,92 @@
-#player1 {
-    width: 45%;
-    float: left;
-    margin: 5px;
+body {
+    font-family: 'News Cycle', sans-serif;
 }
 
-#player2 {
-    width: 45%;
-    float: right;
-    margin: 5px;
+.gameContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+#gameMessages {
+    text-align: center;
 }
 
 #playerActions {
-    height: 45%;
+    height: 300px;
+    width: 510px;
     margin-bottom: 10px;
+    order: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#player1 {
+    width: 250px;
+    float: left;
+    margin: auto;
+}
+
+#player2 {
+    width: 250px;
+    float: right;
+    margin: auto;
 }
 
 #chatWindow {
-    position: absolute;
-    bottom: 10px;
-    left: 25%;
+    height: 400px;
+    width: 600px;
+    order: 2;
 }
 
 #chatBox {
-    width: 500px;
-    height: 300px;
+    height: 80%;
+    width: 100%;
     margin: auto;
-    border: solid 1px #000000;
+    border: solid 3px #cccccc;
+    background-color: #dddddd;
+    overflow: auto;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column-reverse;
 }
 
-/* #player1login {
-    display: show;
+#chatMessage {
+    width: 100%;
+    margin: 3px;
 }
 
-#player2login {
-    display: show;
+.messages {
+    margin: 5px;
+    padding: 3px;
+    background-color: #ffffff;
+    border: solid 2px #cccccc;
 }
 
-#player1choices {
-    display: none;
+#chatBox::-webkit-scrollbar { 
+    width: 0 !important;
 }
 
-#player2choices {
-    display: none;
+input {
+    color: #ffffff;
+    border: solid 2px #cccccc;
+    background-color: #999999;
+    padding: 3px;
 }
 
-#player1leave {
-    display: none;
+input[type="submit"] {
+    margin: 3px;
 }
 
-#player2leave {
-    display: none;
-} */
+input[type="text"] {
+    color: #000000 !important;
+    margin: 3px;
+    padding: 2px;
+    border: solid 2px #cccccc;
+    background-color: #ffffff;
+    border-radius: 3px;
+}
